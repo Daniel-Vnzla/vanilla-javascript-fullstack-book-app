@@ -1,30 +1,27 @@
-const { Router } = require('express');
+const { Router } =  require('express');
 const router = Router();
-
-const path = require('path');
 const { unlink } = require('fs-extra');
+const path = require('path');
 
-const Book = require('../models/Book');
+const Book = require('../models/book.js');
 
-router.get('/', async (req, res) => {
-    const books = await Book.find().sort('-_id');
-    res.json(books);
+router.get('/', async (req,res) => {
+	const books = await Book.find();
+	res.json(books);
 });
 
-router.post('/', async (req, res) => {
-    const { title, author, isbn } = req.body;
-    const imagePath = '/uploads/' + req.file.filename;
-    const newBook = new Book({title, author, isbn, imagePath});
-    console.log(newBook)
-    await newBook.save();
-    res.json({'message': 'Book Saved'});
+router.post('/', async(req,res) => {
+	const { title,author,isbn } = req.body;
+	const imgPath = '/upload/' + req.file.filename;
+	const newBook = await new Book({title,author,isbn,imgPath});
+	await newBook.save();
+	res.json({"message": "Book Save"});
 });
 
-router.delete('/:id', async (req, res) => {
-    const book = await Book.findByIdAndDelete(req.params.id);
-    await unlink(path.resolve('./backend/public/' + book.imagePath));
-    res.json({message: 'Book Deleted'});
-});
-
+router.delete('/:id', async(req,res) => {
+	const book = await Book.findByIdAndDelete(req.params.id);
+	unlink(path.resolve('./backend/public' + book.imgPath))
+	res.json({"message": "Book Delete"});
+})
 
 module.exports = router;
