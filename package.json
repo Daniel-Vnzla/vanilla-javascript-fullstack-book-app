@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=devolopment nodemon backend/index.js --ignore frontend",
     "start": "cross-env NODE_ENV=production nodemon backend/index.js",
+    "dev": "cross-env NODE_ENV=devolopment nodemon backend/index.js --ignore frontend",
     "postinstall": "npm run build ",
     "build": "cross-env NODE_ENV=production webpack",
     "server:dev": "webpack-dev-server"
