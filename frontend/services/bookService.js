@@ -1,33 +1,34 @@
-class BookService{
-	constructor(){
-		this.URI = '/api/books';
-	}
+class BookService {
 
-	async getBooks() {
-		const res = await fetch(this.URI);
-		const books = await res.json();
-		return books;
-	}
+    constructor() {
+        this.URI = `/api/books`;
+    }
 
-	async postBook(newBook) {
-		const res = await fetch(this.URI, {
-			method:'POST',
-			body: newBook
-		});
-		const data = await res.json({"message": "Saved Book"});
-		console.log(data);
-	}
+    async getBooks() {
+        const response = await fetch(this.URI);    
+        const books = await response.json();
+        return books;
+    }
 
-	async deleteBook(bookId) {
-		const res = await fetch(`${this.URI}/${bookId}`, {
-			method: 'DELETE',
-			header: {
-				'content-type': 'aplication/json'
-			}
-		});
-		const data = await res.json({"message": "Delete Book"});
-		console.log(data);
-	}
+    async postBook(book) {
+        const res = await fetch(this.URI, {
+            method: 'POST',
+            body: book
+        });
+        const data = await res.json();
+    }
+
+    async deleteBook(bookId) {
+        const res = await fetch(`${this.URI}/${bookId}`, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            method: 'Delete'
+        });
+        const data = await res.json();
+        console.log(data);
+    }
+
 }
 
 export default BookService;
