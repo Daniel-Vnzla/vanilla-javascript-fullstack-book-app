@@ -10,7 +10,7 @@ router.get('/', async (req,res) => {
 	res.json(books);
 });
 
-router.post('/', async(req,res) => {
+router.post('/', async (req,res) => {
 	const { title,author,isbn } = req.body;
 	const imgPath = '/upload/' + req.file.filename;
 	const newBook = await new Book({title,author,isbn,imgPath});
@@ -18,7 +18,7 @@ router.post('/', async(req,res) => {
 	res.json({"message": "Book Save"});
 });
 
-router.delete('/:id', async(req,res) => {
+router.delete('/:id', async (req,res) => {
 	const book = await Book.findByIdAndDelete(req.params.id);
 	unlink(path.resolve('./backend/public' + book.imgPath))
 	res.json({"message": "Book Delete"});
